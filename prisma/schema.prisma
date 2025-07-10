@@ -1,0 +1,187 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+
+  email String @unique
+  password String ?
+
+  name String @default("not entered")
+  picture String @default("/uploads/no-user-image.png")
+
+  stores Store[]
+  reviews Review[]
+  favorites Product[]
+  orders OrderItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  @@map("user")
+}
+
+model Store {
+  id String @id @default(uuid())
+
+  title String
+  description String?
+
+  User User? @relation(fields: [userId], references: [id])
+  userId String? @map("user_id")
+
+  products Product[]
+  categories Category[]
+  orderItems OrderItem[]
+  colors  Color[]
+  reviews  Review[]
+
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")       
+
+  @@map("store")
+}
+
+
+model Product {
+  id String @id @default(uuid())
+
+  title String
+  description String?
+  price Int
+  iamges String[]
+
+  reviews Review[]
+  orderItems OrderItem[]
+
+  Category Category? @relation(fields: [categoryId], references: [id])
+  categoryId String? @map("category_id")
+
+  Store Store? @relation(fields: [storeId], references: [id])
+  storeId String? @map("store_id")
+
+
+  Color Color? @relation(fields: [colorId], references: [id])
+  colorId String? @map("color_id")
+
+
+  User User? @relation(fields: [userId], references: [id])
+  userId String? @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+
+  @@map("product")
+}
+
+model Category{
+  id String @id @default(uuid())
+  
+  title String
+  desciption String
+  
+  products Product[]
+
+  Store Store? @relation(fields: [storeId], references: [id])
+  storeId String? @map("store_id")
+
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+}
+
+model Color{
+  id String @id @default(uuid())
+  
+  name String
+  value String
+  
+  products Product[]
+
+  Store Store? @relation(fields: [storeId], references: [id])
+  storeId String? @map("store_id")
+
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+}
+
+model Review{
+  id String @id @default(uuid())
+  
+  text String
+  rating Int
+
+  user User? @relation(fields: [userId], references: [id])
+  userId String? @map("user_id")
+
+  Product Product? @relation(fields: [productId], references: [id])
+  productId String? @map("product_id")
+
+  Store Store? @relation(fields: [storeId], references: [id])
+  storeId String? @map("store_id")
+
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  @@map("review")
+}
+
+model Order{
+  id String @id @default(uuid())
+  
+  total Int
+
+  items OrderItem[]
+  status EnumOrderStatus @default(PENDING)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  @@map("order")
+}
+
+model OrderItem{
+  id String @id @default(uuid())
+
+  quantity Int
+  price Int
+
+  Order Order? @relation(fields: [orderId], references: [id])
+  orderId String? @map("order_id")
+
+  Store Store? @relation(fields: [storeId], references: [id])
+  storeId String? @map("store_id")
+
+  Product Product? @relation(fields: [productId], references: [id])
+  productId String? @map("product_id")
+
+  User User? @relation(fields: [userId], references: [id])
+  userId String? @map("user_id")
+
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  @@map("order_item")
+}
+
+
+enum EnumOrderStatus{
+  PENDING
+  PAYED
+}

@@ -1,16 +1,10 @@
 
-import { Injectable } from '@nestjs/common';
-import { Cat } from './interfaces/cat.interface';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { PrismaClient } from '../generated/prisma/client';
 
 @Injectable()
-export class CatsService {
-  private readonly cats: Cat[] = [];
-
-  create(cat: Cat) {
-    this.cats.push(cat);
-  }
-
-  findAll(): Cat[] {
-    return this.cats;
+export class PrismaService extends PrismaClient implements OnModuleInit {
+  async onModuleInit() {
+    await this.$connect();
   }
 }

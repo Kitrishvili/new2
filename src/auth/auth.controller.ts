@@ -35,7 +35,7 @@ export class AuthController {
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Post('login/access-token')
-  async getNewTokens(@Body() req: Request, @Res({passthrough:true}) res: Response){
+  async getNewTokens(@Req() req: Request, @Res({passthrough:true}) res: Response){
 
     
     const refreshTokenFromCookies = req.cookies[this.authService.REFRESH_TOKEN_NAME]
@@ -67,10 +67,12 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  async googleAuthCallback(@Req() req:any, @Res({passthrough:true}) res:Response){
+  async googleAuthCallback(@Req() req, @Res({passthrough:true}) res:Response){
     const { refreshToken, ...response } = await this.authService.validateOAuthLogin(req)
 
     this.authService.addRefreshTokenToResponse(res, refreshToken)
+
+    console.log('acces' + response.accessToken, 'refresh' + refreshToken)
 
     return res.redirect(
       `${process.env['CLIENT_URL']}/dashboard?accessToken${response.accessToken}`

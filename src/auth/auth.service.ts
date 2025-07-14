@@ -70,8 +70,8 @@ export class AuthService {
         
         return user
     }
-    async validateOAuthLogin(req: any){
-        let user = await this.userService.getByEmail(req.email.user)
+    async validateOAuthLogin(req){
+        let user = await this.userService.getByEmail(req.user.email)
 
         if (!user){
             user = await this.prisma.user.create({

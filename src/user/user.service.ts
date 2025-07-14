@@ -8,17 +8,23 @@ export class UserService {
     constructor(private readonly prisma: PrismaService){}
 
     async getById(id:string){
-        const user = await this.prisma.user.findUnique({
-            where:{
-                id
-            },
-            include:{
-                stores:true,
-                favorites:true,
-                orders:true
-            }
+      
+        try {
+                const user = await this.prisma.user.findUnique({
+        where:{
+            id
+        },
+        include:{
+            stores:true,
+            favorites:true,
+            orders:true
+        }
         })
+
         return user
+        } catch (error) {
+            return error
+        }
     }
 
     async getByEmail(email:string){

@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Auth } from 'src/auth/decorators/auth-decorator';
-import { currentUser } from './decorators/user.decorator';
+import { CurrentUser } from './decorators/user.decorator';
 
 @Controller('users')
 export class UserController {
@@ -9,14 +9,14 @@ export class UserController {
 
   @Auth()
   @Get('profile')
-  async getProfile(@currentUser('id') id:string){
+  async getProfile(@CurrentUser('id') id:string){
     return this.userService.getById(id)
   }
 
   @Auth()
   @Get('profile/favorites/:productId')
   async toggleFavorite(
-    @currentUser('id') userId:string,
+    @CurrentUser('id') userId:string,
     @Param('productId') productId:string
   ){
     return this.userService.toggleFavorite(productId, userId)

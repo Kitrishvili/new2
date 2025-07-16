@@ -41,7 +41,7 @@ export class StoreService {
         })
     }
     async delete(storeId:string, userId:string){
-        await this.getById(storeId, userId )
+        await this.getById(userId, storeId)
         
         return this.prisma.store.delete({
             where:{ id: storeId }

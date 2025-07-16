@@ -62,7 +62,7 @@ model Product {
   title String
   description String?
   price Int
-  iamges String[]
+  images String[]
 
   reviews Review[]
   orderItems OrderItem[]
@@ -92,7 +92,7 @@ model Category{
   id String @id @default(uuid())
   
   title String
-  desciption String
+  description String
   
   products Product[]
 

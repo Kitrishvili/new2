@@ -15,7 +15,7 @@ export class ReviewService {
                   where:{
                       storeId
                   },
-                  select:{
+                  include:{
                     user:true
                   }
               })

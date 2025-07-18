@@ -1,0 +1,25 @@
+meta {
+  name: create product
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:5000/products/by-storeId/fd8268bd-ffa5-4466-9a87-b414bde3e373
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title":"iphone",
+    "description":"iphone",
+    "price":12431421,
+    "images":[
+      "1752663653777-273c5bccce4580ccf3f71b3a5d93afef.jpg",
+      "1752663653777-273c5bccce4580ccf3f71b3a5d93afef.jpg"
+    ],
+    "categoryId":"c1535518-ff1c-4167-a3b5-d667b73f609a",
+    "color":"b46b4804-260b-4993-b80f-790ddbd02dec"
+  }
+}

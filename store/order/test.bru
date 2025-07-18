@@ -1,0 +1,24 @@
+meta {
+  name: test
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:5000/order/place
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "items":[
+      {
+        "quantity":2,
+        "price":200,
+        "productId":"933eac64-887a-4ee2-bad5-c1addf5c816c",
+        "storeId":"fd8268bd-ffa5-4466-9a87-b414bde3e373"
+      }
+    ]
+  }
+}

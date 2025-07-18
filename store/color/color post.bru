@@ -1,0 +1,18 @@
+meta {
+  name: color post
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5000/colors/by-storeId/fd8268bd-ffa5-4466-9a87-b414bde3e373
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name":"green1",
+    "value":"#000000"
+  }
+}

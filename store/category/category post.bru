@@ -1,0 +1,18 @@
+meta {
+  name: category post
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5000/categories/by-storeId/fd8268bd-ffa5-4466-9a87-b414bde3e373
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "title":"something1",
+    "description":"something"
+  }
+}

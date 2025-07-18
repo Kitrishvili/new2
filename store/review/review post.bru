@@ -1,0 +1,18 @@
+meta {
+  name: review post
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5000/reviews/by-storeProductId/fd8268bd-ffa5-4466-9a87-b414bde3e373/2f925b0c-6838-4d5a-afb9-8e455bd462c1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "text":"something1",
+    "rating":3
+  }
+}

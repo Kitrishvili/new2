@@ -1,0 +1,15 @@
+meta {
+  name: file post
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:5000/files
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  files: @file(/home/user/Downloads/imgs/273c5bccce4580ccf3f71b3a5d93afef.jpg)
+}
